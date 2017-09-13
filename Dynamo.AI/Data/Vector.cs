@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Autodesk.DesignScript.Runtime;
 using MathNet.Numerics.LinearAlgebra;
 using NumVector = MathNet.Numerics.LinearAlgebra.Vector<double>;
@@ -411,6 +413,18 @@ namespace Dynamo.AI.Data
         public Vector SubVector(int index, int count)
         {
             return new Vector(storage.SubVector(index, count));
+        }
+
+        /// <summary>
+        ///     Shuffles the vector, randomizing the order of its items.
+        /// </summary>
+        /// <returns name="vector">Randomized vector.</returns>
+        /// <search>random,randomize,shuffle,jitter,randomness</search>
+        public Vector Shuffle()
+        {
+            var rng = new Random();
+            var s = storage.Enumerate().OrderBy(_ => rng.Next());
+            return new Vector(CreateVector.DenseOfEnumerable(s));
         }
 
         /// <summary>

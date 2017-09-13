@@ -295,6 +295,30 @@
             <param name="other">The matrix to subtract.</param>
             <returns>The result of the subtraction.</returns>
         </member>
+        <member name="M:Dynamo.AI.Data.Matrix.SolveLinearEquation(Dynamo.AI.Data.Vector)">
+            <summary>
+            Solves a system of linear equations, Ax = y, with A QR factorized.
+            </summary>
+            <param name="y">The right hand side vector</param>
+            <returns>The left hand side vector x</returns>
+        </member>
+        <member name="M:Dynamo.AI.Data.Matrix.SubMatrix(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a matrix that contains the values from the requested sub-matrix.
+            </summary>
+            <param name="rowIndex">The row to start copying from.</param>
+            <param name="rowCount">The number of rows to copy. Must be positive.</param>
+            <param name="columnIndex">The column to start copying from.</param>
+            <param name="columnCount">The number of columns to copy. Must be positive.</param>
+            <returns>The requested sub-matrix.</returns>
+        </member>
+        <member name="M:Dynamo.AI.Data.Matrix.ShuffleRows">
+            <summary>
+                Shuffles the matrix by randomizing the order of its rows.
+            </summary>
+            <returns name="matrix">Randomized Matrix by rows.</returns>
+            <search>random,randomize,shuffle,jitter,randomness</search>
+        </member>
         <member name="M:Dynamo.AI.Data.Matrix.Equals(System.Object)">
             <summary>
             Determines whether the specified System.Object is equal to this instance.
@@ -763,6 +787,13 @@
             <param name="index">The first element to begin copying from.</param>
             <param name="count">The number of elements to copy.</param>
             <returns>A vector containing a copy of the specified elements.</returns>
+        </member>
+        <member name="M:Dynamo.AI.Data.Vector.Shuffle">
+            <summary>
+                Shuffles the vector, randomizing the order of its items.
+            </summary>
+            <returns name="vector">Randomized vector.</returns>
+            <search>random,randomize,shuffle,jitter,randomness</search>
         </member>
         <member name="M:Dynamo.AI.Data.Vector.Sum">
             <summary>

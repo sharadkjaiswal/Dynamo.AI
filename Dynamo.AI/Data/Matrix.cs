@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Autodesk.DesignScript.Runtime;
@@ -419,9 +420,17 @@ namespace Dynamo.AI.Data
         /// <returns>The inverse of this matrix.</returns>
         public Matrix Inverse()
         {
+            return new Matrix(storage.Inverse());
+        }
+
+        /// <summary>
+        /// Computes the Moore-Penrose Pseudo-Inverse of this matrix.
+        /// </summary>
+        public Matrix PseudoInverse()
+        {
             return new Matrix(storage.PseudoInverse());
         }
-        
+
         /// <summary>
         /// Subtracts a scalar value from each element of the matrix.
         /// </summary>
@@ -441,7 +450,42 @@ namespace Dynamo.AI.Data
         {
             return new Matrix(storage.Subtract(other.storage));
         }
-        
+
+        /// <summary>
+        /// Solves a system of linear equations, Ax = y, with A QR factorized.
+        /// </summary>
+        /// <param name="y">The right hand side vector</param>
+        /// <returns>The left hand side vector x</returns>
+        public Vector SolveLinearEquation(Vector y)
+        {
+            return new Vector(storage.Solve(y.Storage));
+        }
+
+        /// <summary>
+        /// Creates a matrix that contains the values from the requested sub-matrix.
+        /// </summary>
+        /// <param name="rowIndex">The row to start copying from.</param>
+        /// <param name="rowCount">The number of rows to copy. Must be positive.</param>
+        /// <param name="columnIndex">The column to start copying from.</param>
+        /// <param name="columnCount">The number of columns to copy. Must be positive.</param>
+        /// <returns>The requested sub-matrix.</returns>
+        public Matrix SubMatrix(int rowIndex, int rowCount, int columnIndex, int columnCount)
+        {
+            return new Matrix(storage.SubMatrix(rowIndex, rowCount, columnIndex, columnCount));
+        }
+
+        /// <summary>
+        ///     Shuffles the matrix by randomizing the order of its rows.
+        /// </summary>
+        /// <returns name="matrix">Randomized Matrix by rows.</returns>
+        /// <search>random,randomize,shuffle,jitter,randomness</search>
+        public Matrix ShuffleRows()
+        {
+            var rng = new Random();
+            var rows = storage.EnumerateRows().OrderBy(_ => rng.Next());
+            return new Matrix(CreateMatrix.DenseOfRowVectors(rows));
+        }
+
         /// <summary>
         /// Determines whether the specified System.Object is equal to this instance.
         /// </summary>
