@@ -314,7 +314,18 @@ namespace Dynamo.AI.Data
         /// </summary>
         public sealed override int GetHashCode()
         {
-            return storage.GetHashCode();
+            var len = storage.Count;
+            var hashNum = Math.Min(len, 15);
+            int hash = 17;
+            unchecked
+            {
+                for (var i = 0; i < hashNum; i++)
+                {
+                    hash = hash * 31 + storage.At(i).GetHashCode();
+                }
+                hash = hash * 31 + len;
+            }
+            return hash;
         }
 
         /// <summary>

@@ -520,7 +520,22 @@ namespace Dynamo.AI.Data
         /// </summary>
         public override int GetHashCode()
         {
-            return storage.GetHashCode();
+            var rowcount = storage.RowCount;
+            var columncount = storage.ColumnCount;
+            var hashNum = Math.Min(rowcount * columncount, 15);
+            int hash = 17;
+            unchecked
+            {
+                for (var i = 0; i < hashNum; i++)
+                {
+                    var col = i % columncount;
+                    var row = (i - col) % rowcount;
+                    hash = hash * 31 + storage.At(row, col).GetHashCode();
+                }
+                hash = hash * 31 + rowcount;
+                hash = hash * 31 + columncount;
+            }
+            return hash;
         }
         #endregion
 
