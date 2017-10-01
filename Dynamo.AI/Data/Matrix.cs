@@ -452,6 +452,16 @@ namespace Dynamo.AI.Data
         }
 
         /// <summary>
+        /// Computes sigmoid (see: https://en.wikipedia.org/wiki/Sigmoid_function) 
+        /// for every elements of the matrix.
+        /// </summary>
+        public Matrix Sigmoid()
+        {
+            var mat = storage.Map(p => 1.0 / (Math.Exp(-p) + 1.0));
+            return new Matrix(mat);
+        }
+
+        /// <summary>
         /// Solves a system of linear equations, Ax = y, with A QR factorized.
         /// </summary>
         /// <param name="y">The right hand side vector</param>
